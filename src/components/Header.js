@@ -8,14 +8,8 @@ const Header = props => (
     </div>
     <div className="content">
       <div className="inner">
-        <h1>Dimension</h1>
-        <p>
-          A fully responsive site template designed by{' '}
-          <a href="https://html5up.net">HTML5 UP</a> and released
-          <br />
-          for free under the{' '}
-          <a href="https://html5up.net/license">Creative Commons</a> license.
-        </p>
+        <h1 className="main-title">Rosana & Miguel</h1>
+        <p>4-7-2020</p>
       </div>
     </div>
     <nav>
@@ -26,7 +20,7 @@ const Header = props => (
               props.onOpenArticle('intro')
             }}
           >
-            Intro
+            La Boda
           </button>
         </li>
         <li>
@@ -35,7 +29,7 @@ const Header = props => (
               props.onOpenArticle('work')
             }}
           >
-            Work
+            Ubicación
           </button>
         </li>
         <li>
@@ -44,7 +38,7 @@ const Header = props => (
               props.onOpenArticle('about')
             }}
           >
-            About
+            Menú
           </button>
         </li>
         <li>
@@ -53,7 +47,7 @@ const Header = props => (
               props.onOpenArticle('contact')
             }}
           >
-            Contact
+            Contacto
           </button>
         </li>
       </ul>
