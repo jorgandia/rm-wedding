@@ -71,6 +71,12 @@
 		img {
 			width: 100%;
 		}
+
+
+	}
+
+	&.location {
+		height: 300px;
 	}
 
 	@include breakpoint(small) {

@@ -8,6 +8,8 @@ const Article = ({
   article,
   articleTimeout,
   onClick,
+  location,
+  src,
 }) => {
   return (
     <article
@@ -18,8 +20,18 @@ const Article = ({
       style={{ display: 'none' }}
     >
       <h2 className="major">{title}</h2>
-      <span className="image main">
-        <img src={picture} alt="" />
+      <span className={`image main ${location && 'location'}`}>
+        {picture && <img src={picture} alt="" />}
+        {location && (
+          <iframe
+            src={src}
+            title={title}
+            width="100%"
+            height="100%"
+            frameBorder="0"
+            allowFullScreen={true}
+          />
+        )}
       </span>
       {children}
       <div className="close" onClick={onClick} />

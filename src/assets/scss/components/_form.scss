@@ -182,19 +182,21 @@ input[type="radio"] {
 			border: solid _size(border-width) _palette(border);
 			content: '';
 			display: inline-block;
-			height: (_size(element-height) * 0.6);
+			height: (_size(element-height) * 0.4);
 			left: 0;
 			//line-height: (_size(element-height) * 0.575);
 			line-height: calc(#{_size(element-height) * 0.575} + 0em);
 			position: absolute;
 			text-align: center;
-			top: -0.125rem;
-			width: (_size(element-height) * 0.6);
+			// top: -0.125rem;
+			width: (_size(element-height) * 0.4);
 		}
 	}
 
 	&:checked+label {
 		&:before {
+			display: flex;
+			align-items: center;
 			background: _palette(fg-bold) !important;
 			border-color: _palette(fg-bold) !important;
 			color: _palette(bg);

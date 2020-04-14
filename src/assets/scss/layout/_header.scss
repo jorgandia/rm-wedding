@@ -109,9 +109,10 @@
       border: solid _size(border-width) _palette(border);
       border-radius: _size(border-radius);
 
+
       li {
         padding-left: 0;
-        border-left: solid _size(border-width) _palette(border);
+        // border-left: solid _size(border-width) _palette(border);
 
         &:first-child {
           border-left: 0;
@@ -127,6 +128,7 @@
           letter-spacing: _font(letter-spacing);
           font-size: 0.8rem;
           font-family: _font(family);
+          font-weight: bold;
           border: none;
           text-align: start;
           box-shadow: none;
@@ -146,7 +148,7 @@
     &.use-middle {
       &:after {
         content: '';
-        display: block;
+        display: none;
         position: absolute;
         top: 0;
         left: calc(50% - #{_size(border-width) * 1});
@@ -245,6 +247,7 @@
         @include vendor('flex-direction', 'column');
         min-width: 10rem;
         max-width: 100%;
+
 
         li {
           border-left: 0;

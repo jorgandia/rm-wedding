@@ -20,13 +20,13 @@ const Header = props => (
               props.onOpenArticle('intro')
             }}
           >
-            La Boda
+            Boda
           </button>
         </li>
         <li>
           <button
             onClick={() => {
-              props.onOpenArticle('work')
+              props.onOpenArticle('location')
             }}
           >
             Ubicación
@@ -35,10 +35,10 @@ const Header = props => (
         <li>
           <button
             onClick={() => {
-              props.onOpenArticle('about')
+              props.onOpenArticle('accommodation')
             }}
           >
-            Menú
+            Alojamiento
           </button>
         </li>
         <li>
@@ -47,7 +47,7 @@ const Header = props => (
               props.onOpenArticle('contact')
             }}
           >
-            Contacto
+            Confirmación
           </button>
         </li>
       </ul>

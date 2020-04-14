@@ -3,17 +3,34 @@ import PropTypes from 'prop-types'
 
 import Article from './Article'
 import PopUp from './PopUp'
-import { weddingArticle } from '../lib/literals'
 import { formKey } from '../config'
 
-import pic01 from '../images/pic01.jpg'
-import pic02 from '../images/pic02.jpg'
-import pic03 from '../images/pic03.jpg'
+import seccionboda2 from '../images/seccionboda2.png'
+import room from '../images/room.jpg'
+
+const styles = {
+  Links: {
+    color: 'lightBlue',
+    textDecoration: 'none',
+  },
+  Disabled: { color: '#ffffff80' },
+}
 
 const Main = props => {
-  const initialState = { name: '', email: '', guests: '', message: '' }
+  const initialState = {
+    name: '',
+    email: '',
+    guests: '',
+    message: '',
+    bus: '',
+    location: '',
+  }
   const [showPopup, setShowPopup] = useState(false)
   const [data, setData] = useState(initialState)
+  const [locationAnswer, setLocationAnswer] = useState(false)
+  const [text, setText] = useState('')
+  const src =
+    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d20886.785010167394!2d-0.5527535243368369!3d38.904793049197885!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xf86b8494bd7ed4cb!2sAlquer%C3%ADa+de+Galim!5e0!3m2!1ses!2ses!4v1484569267148'
 
   const handleInputChange = event => {
     const target = event.target
@@ -30,6 +47,11 @@ const Main = props => {
   }
 
   const handleReset = () => {
+    document
+      .getElementsByName('location')
+      .forEach(location => (location.checked = false))
+    document.getElementsByName('bus').forEach(bus => (bus.checked = false))
+
     setData(initialState)
   }
 
@@ -43,10 +65,29 @@ const Main = props => {
       },
       body: JSON.stringify(data),
     })
-      .then(setShowPopup(true), setData(initialState))
+      .then(
+        setText('Mensaje enviado correctamente'),
+        setShowPopup(true),
+        setData(initialState)
+      )
       .catch(function(error) {
+        setText('Ha habido un error, por favor, reenvía el formulario')
+        setShowPopup(true)
         console.error(error)
       })
+  }
+
+  const handleRadioButton = ev => {
+    console.log(ev.target.value)
+    if (ev.target.value === 'yes') {
+      setLocationAnswer(true)
+    } else if (ev.target.value === 'no') {
+      setData({ ...data, location: '' })
+      document
+        .getElementsByName('location')
+        .forEach(location => (location.checked = false))
+      setLocationAnswer(false)
+    }
   }
 
   return (
@@ -59,40 +100,79 @@ const Main = props => {
         <Article
           id="intro"
           title="La Boda"
-          picture={pic01}
+          picture={seccionboda2}
           article={props.article}
           articleTimeout={props.articleTimeout}
           onClick={() => {
             props.onCloseArticle()
           }}
         >
-          <p>{weddingArticle.p1}</p>
-          <p>{weddingArticle.p2}</p>
+          <p>
+            No era ésta la idea inicial pero, al igual que tú, tras lo sucedido
+            los últimos meses, hemos tenido que reinventarnos. Si estás leyendo
+            esto, significa que para nosotros eres una persona importante. Tan
+            importante que nos gustaría{' '}
+            <b>compartir contigo este dia tan especial</b>.
+          </p>
+          <p>
+            Hemos pensado, que tras haber cumplido con el <b>#quédateencasa</b>,
+            todos nos merecemos un <b>#yomevoydefiesta</b>. Así que, te
+            invitamos a nuestra boda el próximo 4 de Julio en L'Alquería de
+            Galim, <b>L'Olleria</b> (Valencia), para regalarnos un día de
+            emociones, reencuentros y fiesta muy merecido.
+          </p>
         </Article>
         <Article
-          id="work"
+          id="location"
           title="Ubicación"
-          picture={pic02}
+          location={true}
+          src={src}
           article={props.article}
           articleTimeout={props.articleTimeout}
           onClick={() => {
             props.onCloseArticle()
           }}
         >
-          <p>{weddingArticle.p1}</p>
-          <p>{weddingArticle.p2}</p>
+          <p>
+            Y como una boda no sería posible sin un lugar especial que nos diera
+            cobijo a todos, arriba os dejamos la ubicación de ese maravilloso
+            rinconcito que nos va a permitir disfrutar como niños.
+          </p>
+          <p>
+            Si, además, queréis conocerlo más en detalle os dejamos su web para
+            que podáis examinarlo a fondo: <br />
+            <a
+              style={styles.Links}
+              href="http://alqueriadegalim.com/"
+              target="_blank"
+            >
+              alqueriadegalim.com
+            </a>
+          </p>
         </Article>
         <Article
-          id="about"
-          title="Menú"
-          picture={pic03}
+          id="accommodation"
+          title="Alojamiento"
+          picture={room}
           article={props.article}
           articleTimeout={props.articleTimeout}
           onClick={() => {
             props.onCloseArticle()
           }}
         >
-          <p>{weddingArticle.p1}</p>
+          <p>
+            Como sabemos que también puede darse el caso de que quieras alargar
+            tu estancia en estas maravillosas tierras un día más, aquí te
+            dejamos una opción para hospedarte en caso de requerirlo:
+            <br />
+            <a
+              style={styles.Links}
+              href="http://complejogasaqui.com/"
+              target="_blank"
+            >
+              complejogasaqui.com
+            </a>
+          </p>
         </Article>
         <Article
           id="contact"
@@ -144,9 +224,63 @@ const Main = props => {
                 onChange={handleInputChange}
               />
             </div>
+            <div className="field half first">
+              <label>Bus:</label>
+              <input
+                type="radio"
+                name="bus"
+                id="yes"
+                value="yes"
+                onChange={handleInputChange}
+                onClick={handleRadioButton}
+              />
+              <label htmlFor="yes">Sí</label>
+              <br />
+              <input
+                type="radio"
+                name="bus"
+                id="no"
+                value="no"
+                onChange={handleInputChange}
+                onClick={handleRadioButton}
+              />
+              <label htmlFor="no">No</label>
+            </div>
+            <div className="field half">
+              <label>Salida desde:</label>
+              <input
+                type="radio"
+                name="location"
+                id="xativa"
+                value="xativa"
+                onChange={handleInputChange}
+                disabled={!locationAnswer}
+              />
+              <label
+                style={!locationAnswer ? styles.Disabled : null}
+                htmlFor="xativa"
+              >
+                Xátiva
+              </label>
+              <br />
+              <input
+                type="radio"
+                name="location"
+                id="canals"
+                value="canals"
+                onChange={handleInputChange}
+                disabled={!locationAnswer}
+              />
+              <label
+                style={!locationAnswer ? styles.Disabled : null}
+                htmlFor="canals"
+              >
+                Canals
+              </label>
+            </div>
             <div className="field">
               <label htmlFor="message">
-                Mensaje (alergias, otros asistentes, restricciones...)
+                Alergias, otros asistentes, restricciones...
               </label>
               <textarea
                 name="message"
@@ -188,9 +322,7 @@ const Main = props => {
           </ul>
         </Article>
       </div>
-      {showPopup && (
-        <PopUp text="Mensaje enviado correctamente" closePopUp={handlePopup} />
-      )}
+      {showPopup && <PopUp text={text} closePopUp={handlePopup} />}
     </Fragment>
   )
 }
